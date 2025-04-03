@@ -1,0 +1,19 @@
+{
+  "name": "evento-microservice",
+  "version": "1.0.0",
+  "description": "Microservicio para gestionar eventos usando Node.js y MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "TuNombre",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
