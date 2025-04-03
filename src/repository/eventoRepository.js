@@ -7,6 +7,20 @@ module.exports = {
     } catch (error) {
       throw error;
     }
+  },
+  findById: async (id) => {
+    try {
+      return await Evento.findById(id);
+    } catch (error) {
+      throw error;
+    }
+  },
+  create: async (eventoData) => {
+    try {
+      const evento = new Evento(eventoData);
+      return await evento.save();
+    } catch (error) {
+      throw error;
+    }
   }
-  // Puedes agregar otros métodos (create, update, delete) según tus necesidades.
 };

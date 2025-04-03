@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 const Schema = mongoose.Schema;
 
 const eventoSchema = new Schema({
+  id: {
+    type: Number
+  },
   ubicacion: {
     type: String,
     required: true
@@ -25,7 +29,7 @@ const eventoSchema = new Schema({
   }
 });
 
-// Si necesitas índices adicionales, los puedes agregar aquí
-// ejemplo: eventoSchema.index({ <campo>: 1 }, { unique: true });
+// Agrega el plugin para autoincrementar el campo "id"
+eventoSchema.plugin(AutoIncrement, { inc_field: 'id' });
 
 module.exports = mongoose.model('Evento', eventoSchema);
