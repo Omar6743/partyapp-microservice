@@ -9,5 +9,8 @@ module.exports = {
   },
   crearEvento: async (eventoData) => {
     return await eventoRepository.create(eventoData);
+  },
+  borrarEvento: async (eventoId) => {
+    return await eventoRepository.deleteById(eventoId);
   }
 };

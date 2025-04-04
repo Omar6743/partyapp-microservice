@@ -12,7 +12,7 @@ router.get('/eventos', async (req, res) => {
   }
 });
 
-// Endpoint para obtener un evento por ID (ya configurado)
+// Endpoint para obtener un evento por ID
 router.get('/eventos/:id', async (req, res) => {
   try {
     const evento = await eventoService.obtenerEventoPorId(req.params.id);
@@ -31,6 +31,20 @@ router.post('/eventos', async (req, res) => {
   try {
     const nuevoEvento = await eventoService.crearEvento(req.body);
     res.status(201).json(nuevoEvento);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Nuevo endpoint DELETE para borrar un evento por ID
+router.delete('/eventos/:id', async (req, res) => {
+  try {
+    const eventoBorrado = await eventoService.borrarEvento(req.params.id);
+    if (eventoBorrado) {
+      res.status(200).json({ message: 'Evento borrado exitosamente' });
+    } else {
+      res.status(404).json({ message: 'Evento no encontrado' });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

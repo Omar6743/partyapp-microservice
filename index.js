@@ -13,12 +13,17 @@ mongoose.connect('mongodb://127.0.0.1:27017/PartyApp', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log('Conectado a MongoDB'))
-.catch((error) => console.error('Error al conectar a MongoDB:', error));
+.then(() => {
+  console.log('Conectado a MongoDB');
 
-// Ruta del microservicio para eventos
-app.use('/api', eventoController);
+  // Una vez conectados a MongoDB, iniciar las rutas
+  // Monta el microservicio para eventos en la ruta /api
+  app.use('/api', eventoController);
 
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
+  app.listen(port, () => {
+    console.log(`Servidor corriendo en http://localhost:${port}`);
+  });
+})
+.catch((error) => {
+  console.error('Error al conectar a MongoDB:', error);
 });

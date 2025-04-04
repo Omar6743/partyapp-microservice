@@ -22,5 +22,12 @@ module.exports = {
     } catch (error) {
       throw error;
     }
+  },
+  deleteById: async (id) => {
+    try {
+      return await Evento.findByIdAndDelete(id);
+    } catch (error) {
+      throw error;
+    }
   }
 };
