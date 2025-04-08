@@ -23,6 +23,13 @@ module.exports = {
       throw error;
     }
   },
+  updateById: async (id, eventoData) => {
+    try {
+      return await Evento.findByIdAndUpdate(id, eventoData, { new: true });
+    } catch (error) {
+      throw error;
+    }
+  },
   deleteById: async (id) => {
     try {
       return await Evento.findByIdAndDelete(id);

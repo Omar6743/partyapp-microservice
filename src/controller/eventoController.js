@@ -50,4 +50,18 @@ router.delete('/eventos/:id', async (req, res) => {
   }
 });
 
+// Endpoint para actualizar un evento por ID
+router.put('/eventos/:id', async (req, res) => {
+  try {
+    const eventoActualizado = await eventoService.actualizarEvento(req.params.id, req.body);
+    if (eventoActualizado) {
+      res.status(200).json(eventoActualizado);
+    } else {
+      res.status(404).json({ message: 'Evento no encontrado' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
