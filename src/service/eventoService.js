@@ -1,5 +1,5 @@
 const eventoRepository = require('../repository/eventoRepository');
-const EventoNoDisponibleException = require('../exceptions/EventoNoDisponibleException');  // Asegúrate de crear esta excepción
+const EventoNoDisponibleException = require('../EventoNoDisponible/EventoNoDisponibleException');  // Asegúrate de crear esta excepción
 
 module.exports = {
   listarEventos: async () => {

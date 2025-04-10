@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const eventoService = require('../service/eventoService');
+const EventoNoDisponibleException = require('../EventoNoDisponible/EventoNoDisponibleException');
 
 // Endpoint para listar todos los eventos
 router.get('/eventos', async (req, res) => {
