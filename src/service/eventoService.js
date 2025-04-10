@@ -1,4 +1,5 @@
 const eventoRepository = require('../repository/eventoRepository');
+const EventoNoDisponibleException = require('../exceptions/EventoNoDisponibleException');  // Asegúrate de crear esta excepción
 
 module.exports = {
   listarEventos: async () => {
@@ -28,5 +29,22 @@ module.exports = {
   },
   borrarEvento: async (eventoId) => {
     return await eventoRepository.deleteById(eventoId);
+  },
+
+  // Implementación del método para reservar un evento
+  reservarEvento: async (eventoId) => {
+    const evento = await eventoRepository.findById(eventoId);
+    
+    if (!evento) {
+      throw new Error('Evento no encontrado');
+    }
+    
+    if (evento.estado === 'reservado') {
+      throw new EventoNoDisponibleException('Este evento ya está reservado');
+    }
+
+    // Cambiar el estado del evento a "reservado"
+    evento.estado = 'reservado';
+    return await evento.save();
   }
 };

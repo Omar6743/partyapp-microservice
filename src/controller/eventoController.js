@@ -64,4 +64,17 @@ router.put('/eventos/:id', async (req, res) => {
   }
 });
 
+router.post('/eventos/:id/reservar', async (req, res) => {
+  try {
+    const eventoReservado = await eventoService.reservarEvento(req.params.id);
+    res.status(200).json(eventoReservado);
+  } catch (error) {
+    if (error instanceof EventoNoDisponibleException) {
+      res.status(400).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: error.message });
+    }
+  }
+});
+
 module.exports = router;
