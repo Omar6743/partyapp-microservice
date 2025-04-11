@@ -4,20 +4,17 @@ const eventoController = require('./src/controller/eventoController');
 
 const app = express();
 const port = process.env.PORT || 3000;
+const mongoUrl = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/PartyApp';
 
-// Middleware para parsear JSON
 app.use(express.json());
 
-// Conexión a MongoDB (asegúrate de que el servidor mongod esté en ejecución)
-mongoose.connect('mongodb://127.0.0.1:27017/PartyApp', {
+mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 .then(() => {
   console.log('Conectado a MongoDB');
 
-  // Una vez conectados a MongoDB, iniciar las rutas
-  // Monta el microservicio para eventos en la ruta /api
   app.use('/api', eventoController);
 
   app.listen(port, () => {
