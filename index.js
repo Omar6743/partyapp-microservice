@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const eventoController = require('./src/controller/eventoController');
+const grupoMusicalController = require('./src/controller/grupoMusicalController'); // Importar controlador de grupos musicales
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,7 +16,9 @@ mongoose.connect(mongoUrl, {
 .then(() => {
   console.log('Conectado a MongoDB');
 
-  app.use('/api', eventoController);
+  // Montar controladores
+  app.use('/api', eventoController); // Rutas para eventos
+  app.use('/api', grupoMusicalController); // Rutas para grupos musicales
 
   app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);

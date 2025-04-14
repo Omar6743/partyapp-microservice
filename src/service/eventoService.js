@@ -1,5 +1,6 @@
 const eventoRepository = require('../repository/eventoRepository');
 const EventoNoDisponibleException = require('../EventoNoDisponible/EventoNoDisponibleException');  // Asegúrate de crear esta excepción
+const grupoMusicalService = require('./grupoMusicalService');
 
 module.exports = {
   listarEventos: async () => {
@@ -46,5 +47,38 @@ module.exports = {
     // Cambiar el estado del evento a "reservado"
     evento.estado = 'reservado';
     return await evento.save();
+  },
+
+  // Implementación del método para asignar un grupo musical a un evento
+  asignarGrupo: async (eventoId, grupoId) => {
+    // Obtén el grupo musical por ID y verifica su disponibilidad
+    const grupo = await grupoMusicalService.obtenerGrupoPorId(grupoId);
+    if (!grupo || !grupo.disponibilidad) {
+      throw new Error('El grupo musical no está disponible o no existe.');
+    }
+
+    // Busca el evento por ID
+    const evento = await eventoRepository.findById(eventoId);
+    if (!evento) {
+      throw new Error('El evento no existe.');
+    }
+
+    // Asigna el ID del grupo al evento
+    evento.grupo = grupoId;
+    return await evento.save();
+  },
+
+  // Implementación del método para calcular el precio dinámico del evento
+  calcularPrecioEvento: async (eventoId, factorDemanda) => {
+    const evento = await eventoRepository.findById(eventoId).populate('grupo'); // Asegúrate de que el esquema de Evento tiene el campo `grupo` como referencia a la colección de grupos musicales
+    if (!evento || !evento.grupo) {
+      throw new Error('El evento no tiene un grupo asignado.');
+    }
+
+    const costoPorHora = evento.grupo.costoPorHora;
+    const precio = (evento.duracion / 60) * costoPorHora + factorDemanda;
+    evento.precio = precio;
+    await evento.save();
+    return evento;
   }
 };
