@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors'); // 🔹 Importar CORS
 const eventoController = require('./src/controller/eventoController');
-const grupoMusicalController = require('./src/controller/grupoMusicalController'); // Importar controlador de grupos musicales
+const grupoMusicalController = require('./src/controller/grupoMusicalController');
 
 const app = express();
 const port = process.env.PORT || 3000;
 const mongoUrl = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/PartyApp';
 
+app.use(cors()); // 🔹 Habilitar CORS para todas las rutas
 app.use(express.json());
 
 mongoose.connect(mongoUrl, {
